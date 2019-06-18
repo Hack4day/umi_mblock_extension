@@ -12,8 +12,11 @@
 		["w", "%d.side motor moves %d.direction with speed %n","motor setup","LEFT","Forward","255",
 		{"encode":"{d0}{d1}{d2}","setup":"    pinMode(4,OUTPUT);\n    pinMode(7,OUTPUT);\n    pinMode(5,OUTPUT);\n    pinMode(8,OUTPUT);\n    pinMode(9,OUTPUT);\n    pinMode(6,OUTPUT);\n","inc":"void Motor(boolean side, boolean direction, double speed);\n","def":"--separator--\nvoid Motor(boolean side, boolean direction, double speed)\n{\n  if(side == 0) analogWrite(5,speed);\n  if(side == 1) analogWrite(6,speed);\n  if(side == 0 && direction == 0) digitalWrite(4,0);\n  if(side == 0 && direction == 0) digitalWrite(7,1);\n  if(side == 0 && direction == 1) digitalWrite(4,1);\n  if(side == 0 && direction == 1) digitalWrite(7,0);\n  if(side == 1 && direction == 0) digitalWrite(8,0);\n  if(side == 1 && direction == 0) digitalWrite(9,1);\n  if(side == 1 && direction == 1) digitalWrite(8,1);\n  if(side == 1 && direction == 1) digitalWrite(9,0);\n}","work":"Motor({0},{1},{2});\n","loop":""}],
 
+		/*
 		["B", "read IR remote (Carmp3) button %d.IRcode","myIR","Num0",
 		{"encode":"{d0}","setup":"irrecv.enableIRIn();\n","inc":"#include <IRremote.h>\n","def":"IRrecv irrecv(2);\ndecode_results results;\nunsigned long IRvalue = 0;\n--separator--void checkIR()--separator--{if(irrecv.decode(&results))--separator--{IRvalue = results.value;irrecv.resume();}}","work":"!(IRvalue - {0})","loop":"checkIR();\n"}],
+		*/
+
 
 		["B", "read RFID tag","myRFID",
 		{"setup":"SPI.begin();\nmfrc522.PCD_Init();\npinMode(10, OUTPUT);\ndigitalWrite(10, 0);\n","inc":"\n#include <SPI.h>\n#include <MFRC522.h>\n","def":"MFRC522 mfrc522(8, 7);\nString myRFID = \"FF FF FF FF\";\nString readRFID()\n--separator--{\nif ( ! mfrc522.PICC_IsNewCardPresent()) \n--separator--{\nreturn \"FF FF FF FF\";\n}\nif ( ! mfrc522.PICC_ReadCardSerial())\n--separator--{	\nreturn \"FF FF FF FF\";\n}\nif (mfrc522.uid.size != 0)\n--separator--{\nString content = \"\";\nfor (byte i = 0; i < mfrc522.uid.size; i++)\n--separator--{\ncontent.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? \" 0\" : \" \"));\ncontent.concat(String(mfrc522.uid.uidByte[i], HEX));\n}\ncontent.toUpperCase();\nreturn content.substring(1);\n}\n}\n","work":"myRFID","loop":"myRFID = readRFID();\n"}],
@@ -59,8 +62,8 @@
 		["w", "mix neopixel LED number %n color: Red %n Green %n Blue %n","neopixel", 0, 0, 0, 0,
 		{"encode":"{d0}{d1}{d2}{d3}","setup":"","inc":"","def":"","work":"pixels.setPixelColor({0}, pixels.Color({1},{2},{3}));\npixels.show();\n","loop":""}],
 		
-		["w", "play tone pin %n on note %d.notes beat %d.beats","runTone", "9", "C4","Half",
-		{"encode":"{d0}{s1}{s2}","setup":"pinMode({0},OUTPUT);\n","inc":"","def":"","work":"tone({0},{1},{2}); // write to buzzer\ndelay({2});\n","loop":""}],
+		["w", "play tone on note %d.notes beat %d.beats","runTone", "C4","Half",
+		{"encode":"{s0}{s1}","setup":"pinMode(10,OUTPUT);\n","inc":"","def":"","work":"tone(10,{0},{1}); // write to buzzer\ndelay({1});\n","loop":""}],
 		
 		["w", "serial write text %s", "serialWrite", "hello",
 		{"setup":"Serial.begin(115200);\n","inc":"","def":"","work":"Serial.println({0});\n","loop":""}],
