@@ -1,5 +1,5 @@
 {	"extensionName": "UMI",
-	"version":"2.5",
+	"version":"2.6",
 	"sort":1,
 	"extensionPort": 0,
 	"firmware":"1.1.103",
@@ -67,6 +67,9 @@
 		
 		["w", "serial write text %s", "serialWrite", "hello",
 		{"setup":"Serial.begin(115200);\n","inc":"","def":"","work":"Serial.println({0});\n","loop":""}],
+
+		["w", "LCD write text %s LCD collum %d row %d", "lcdWrite","Kids Maker", 1, 1,
+			{"setup":"lcd.init();\nlcd.init();\nlcd.backlight();\n","inc":"#include <LiquidCrystal_I2C.h>\n","def":"LiquidCrystal_I2C lcd(0x3F,16,2);\n","work":"lcd.setCursor({1}-1,{2}-1);\nlcd.print({0});\n","loop":"lcd.clear();"}],
 		
 		["R", "serial available bytes", "serialAvailable",
 		{"setup":"Serial.begin(115200);\n","inc":"","def":"","work":"Serial.available()","loop":""}],
