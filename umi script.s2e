@@ -69,7 +69,13 @@
 		{"setup":"Serial.begin(115200);\n","inc":"","def":"","work":"Serial.println({0});\n","loop":""}],
 
 		["w", "LCD write text %s LCD collum %d row %d", "lcdWrite","Kids Maker", 1, 1,
-			{"setup":"lcd.init();\nlcd.init();\nlcd.backlight();\n","inc":"#include <LiquidCrystal_I2C.h>\n","def":"LiquidCrystal_I2C lcd(0x3F,16,2);\n","work":"lcd.setCursor({1}-1,{2}-1);\nlcd.print({0});\n","loop":"lcd.clear();"}],
+		{"setup":"lcd.init();\nlcd.init();\nlcd.backlight();\n","inc":"#include <LiquidCrystal_I2C.h>\n","def":"LiquidCrystal_I2C lcd(0x3F,16,2);\n","work":"lcd.setCursor({1}-1,{2}-1);\nlcd.print({0});\n","loop":""}],
+
+		["w", "LCD clear", "lcdClear",
+		{"setup":"","inc":"#include <LiquidCrystal_I2C.h>\n","def":"LiquidCrystal_I2C lcd(0x3F,16,2);\n","work":"lcd.clear();\n","loop":""}],
+
+		["w", "LCD scroll %d.scrollDir", "lcdScroll", "scroll left",
+		{"setup":"","inc":"#include <LiquidCrystal_I2C.h>\n","def":"LiquidCrystal_I2C lcd(0x3F,16,2);\n","work":"({0} == 1) ? lcd.scrollDisplayLeft() : lcd.scrollDisplayRight();\n","loop":""}],
 		
 		["R", "serial available bytes", "serialAvailable",
 		{"setup":"Serial.begin(115200);\n","inc":"","def":"","work":"Serial.available()","loop":""}],
@@ -143,7 +149,8 @@
 		"button":["Up","Down","Left","Right","Square","Triangle","Circle","X","On","Off","Null"],
 		"IRcode": ["CH-","CH","CH+","PREV","NEXT","Play/Pause","Vol-","Vol+","EQ","Num0","100+","200+","Num1","Num2","Num3","Num4","Num5","Num6","Num7","Num8","Num9"],
 		"button2":["up", "down", "left", "right", "f4", "NULL"],
-		"channel":["channel-1", "channel-2", "channel-3", "channel-4", "channel-5", "channel-6", "channel-7", "channel-8"]
+		"channel":["channel-1", "channel-2", "channel-3", "channel-4", "channel-5", "channel-6", "channel-7", "channel-8"],
+		"scrollDir":["scroll left", "scroll right"]
 
 
 		/*
@@ -197,7 +204,10 @@
 		"Num6": 0xFF5AA5,
 		"Num7": 0xFF42BD,
 		"Num8": 0xFF4AB5,
-		"Num9": 0xFF52AD
+		"Num9": 0xFF52AD,
+
+		"scroll left": 1,
+		"scroll right": 2
 
 
 		/*
